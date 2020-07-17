@@ -25,16 +25,20 @@ export default class App extends React.Component {
     console.log("Updated Bucket List: ", this.state.buckets);
   };
 
+  // map method를 사용할 때 array내 child들이 각각 고유 값을 가져야 한다. 
+  // https://codingmania.tistory.com/292
   handleToggleCompleted = (id) => {
+    console.log(id);
     const { buckets } = this.state;
     this.setState({
       buckets: buckets.map(
         (bucket) =>
           id === bucket.id
-            ? (bucket.completed = !bucket.completed) // completed를 반대 값으로 지정
-            : bucket.completed // 아니면 기존 값 유지
+            ? {...bucket, completed: !bucket.completed} // completed를 반대 값으로 지정
+            : bucket // 아니면 기존 값 유지
       ),
     });
+    
   };
 
   render() {

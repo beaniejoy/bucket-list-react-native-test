@@ -23,7 +23,7 @@ class BucketInput extends Component {
         <View style={styles.input}>
           <TextInput
             style={styles.inputText}
-            placeholder="당신의 버킷리스트는 무엇인가요? 추가해보세요!~"
+            placeholder="당신의 버킷리스트는 무엇인가요? 추가해보세요!"
             autoCorrect={false}
             value={this.state.bucket}
             onChangeText={(bucket) => this.setState({bucket})}
