@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default class Bucket extends Component {
@@ -35,12 +41,12 @@ export default class Bucket extends Component {
   };
 
   // input 에서 onChange 이벤트가 발생 될 때  호출되는 함수
-  handleChange = (e) => {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value,
-    });
-  };
+  // handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   this.setState({
+  //     [name]: value,
+  //   });
+  // };
 
   componentDidUpdate(prevProps, prevState) {
     // editing 값이 바뀔 때 처리 할 로직
@@ -51,16 +57,14 @@ export default class Bucket extends Component {
       // editing 값이 false -> true 로 전환 될 때
       // info 의 값을 state 에 넣어준다
       this.setState({
-        name: info.name,
-        phone: info.phone,
+        bucket: info.bucket,
       });
     }
 
     if (prevState.editing && !this.state.editing) {
       // editing 값이 true -> false 로 전환 될 때
       onUpdate(info.id, {
-        name: this.state.name,
-        phone: this.state.phone,
+        bucket: this.state.bucket,
       });
     }
   }
@@ -79,37 +83,39 @@ export default class Bucket extends Component {
   }
 
   render() {
-    const style = {
-      border: "2px solid blue",
-      padding: "8px",
-      margin: "8px",
-    };
-
     const { editing } = this.state;
 
     if (editing) {
       // 수정모드
       return (
-        <div style={style}>
-          <div>
-            <input
-              value={this.state.name}
-              name="name"
-              placeholder="이름"
-              onChange={this.handleChange}
+        <View style={styles.bucket}>
+          <View style={styles.bucketText}>
+            <TextInput
+              placeholder={this.state.bucket}
+              autoCorrect={false}
+              value={this.state.bucket}
+              onChangeText={(bucket) => this.setState({ bucket })}
             />
-          </div>
-          <div>
-            <input
-              value={this.state.phone}
-              name="phone"
-              placeholder="전화번호"
-              onChange={this.handleChange}
-            />
-          </div>
-          <button onClick={this.handleToggleEdit}>적용</button>
-          <button onClick={this.handleRemove}>삭제</button>
-        </div>
+          </View>
+          <View style={styles.btnContainer}>
+            <TouchableOpacity onPress={this.handleToggleEdit}>
+              <MaterialCommunityIcons
+                style={styles.bucketUpdateBtn}
+                size={30}
+                name="check-bold"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.handleRemove}>
+              <MaterialCommunityIcons
+                style={styles.bucketDelBtn}
+                size={30}
+                name="delete-outline"
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        // <button onClick={this.handleToggleEdit}>적용</button>
+        // <button onClick={this.handleRemove}>삭제</button>
       );
     }
 
@@ -122,6 +128,7 @@ export default class Bucket extends Component {
             style={styles.bucketCheckbox}
             onPress={this.handleToggleCompleted}
           >
+            {/* 완료, 미완료 bucketlist 각각 style 따로 지정  */}
             {completed ? (
               <MaterialCommunityIcons
                 size={20}
@@ -134,23 +141,29 @@ export default class Bucket extends Component {
               />
             )}
           </TouchableOpacity>
-          <Text>{bucket}</Text>
+          {completed ? (
+            <Text style={styles.bucketDone}>{bucket}</Text>
+          ) : (
+            <Text>{bucket}</Text>
+          )}
         </View>
-        <TouchableOpacity>
-          <MaterialCommunityIcons
-            style={styles.bucketDelBtn}
-            size={30}
-            name="delete-outline"
-          />
-        </TouchableOpacity>
+        <View style={styles.btnContainer}>
+          <TouchableOpacity onPress={this.handleToggleEdit}>
+            <MaterialCommunityIcons
+              style={styles.bucketUpdateBtn}
+              size={30}
+              name="pencil"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.handleRemove}>
+            <MaterialCommunityIcons
+              style={styles.bucketDelBtn}
+              size={30}
+              name="delete-outline"
+            />
+          </TouchableOpacity>
+        </View>
       </View>
-      // <div style={style}>
-      //     <div><b>{id}</b></div>
-      //     <div><b>{name}</b></div>
-      //     <div>{phone}</div>
-      //     <button onClick={this.handleToggleEdit}>수정</button>
-      //     <button onClick={this.handleRemove}>삭제</button>
-      // </div>
     );
   }
 }
@@ -170,7 +183,28 @@ const styles = StyleSheet.create({
   bucketText: {
     flexDirection: "row",
   },
+  input: {
+    borderRadius: 10,
+    backgroundColor: "#FFF",
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: 50,
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    borderBottomColor: "#bbb",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
   bucketDelBtn: {
     color: "#777",
+  },
+  bucketUpdateBtn: {
+    color: "#777",
+  },
+  bucketDone: {
+    textDecorationLine: "line-through",
+  },
+  btnContainer: {
+    flexDirection: "row",
   },
 });
