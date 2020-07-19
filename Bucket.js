@@ -40,7 +40,7 @@ export default class Bucket extends Component {
     onToggleCompleted(info.id);
   };
 
-  // input 에서 onChange 이벤트가 발생 될 때  호출되는 함수
+  // 이 부분은 TextInput 차원에서 처리를 해주기에 불필요한 코드
   // handleChange = (e) => {
   //   const { name, value } = e.target;
   //   this.setState({
@@ -114,8 +114,6 @@ export default class Bucket extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        // <button onClick={this.handleToggleEdit}>적용</button>
-        // <button onClick={this.handleRemove}>삭제</button>
       );
     }
 

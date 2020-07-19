@@ -2,6 +2,19 @@
 
 > react-native 연습용 과제입니다.
 
+<br>
+
+```
+App.js
+├── BucketInput.js  ── [Create] New Bucket
+└── BucketList.js   ── List Up All Buckets
+    └── Bucket.js
+        ├── 1. (Done or Not yet) Toggle function 
+        ├── 2. Bucket content
+        └── 3.[Update or Delete] Bucket function 
+
+```
+
 ### Install React-Native 
 ```cmd
 npm install -g react-native-cli
@@ -22,6 +35,8 @@ npm install
 ```cmd
 expo start
 ```
+
+<br>
 
 ## Reference
 디자인 뼈대는 블로그에서 참고했습니다.  
